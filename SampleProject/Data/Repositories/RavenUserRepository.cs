@@ -1,5 +1,4 @@
 ﻿using BusinessEntities;
-using Common;
 using Data.Indexes;
 using Raven.Client;
 using System.Collections.Generic;
@@ -8,12 +7,12 @@ using System.Xml.Linq;
 
 namespace Data.Repositories
 {
-    [AutoRegister]
-    public class UserRepository : Repository<User>, IUserRepository
+    //[AutoRegister]
+    public class RavenUserRepository : Repository<User>, IUserRepository
     {
         private readonly IDocumentSession _documentSession;
 
-        public UserRepository(IDocumentSession documentSession) : base(documentSession)
+        public RavenUserRepository(IDocumentSession documentSession) : base(documentSession)
         {
             _documentSession = documentSession;
         }
@@ -23,7 +22,9 @@ namespace Data.Repositories
 
             if (tag != null)
             {
-                query = query.Where($"Tags:{tag}*");
+                query = query.Where($"tags:*{tag}*");               //Note: Works only from Web UI
+                //query = query.Where($"Name:*Andy*");              //Note: Works
+                //query = query.WhereIn("Tags", new[] { $"tag" });  //Note: Alternate form
             }
 
             return query.ToList();

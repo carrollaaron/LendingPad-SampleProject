@@ -29,6 +29,11 @@ namespace Data
                                    session.Advanced.MaxNumberOfRequestsPerSession = 5000;
                                    return session;
                                }, lifestyle);
+
+
+            builder.Services.AddDbContext<BookContext>(options =>
+                    options.UseInMemoryDatabase("BookDatabase"));
+
         }
 
         private static IDocumentStore InitializeDocumentStore(Assembly assembly, bool createIndexes)

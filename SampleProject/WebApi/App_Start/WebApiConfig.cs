@@ -54,6 +54,11 @@ namespace WebApi
                                     {
                                         new ContextInitializeAttribute()
                                     });
+
+            //// Configure the in-memory database
+            //var options = new DbContextOptionsBuilder<BookContext>()
+            //    .UseInMemoryDatabase(databaseName: "BookDatabase") // Unique name for the in-memory database
+            //    .Options;
         }
     }
 }

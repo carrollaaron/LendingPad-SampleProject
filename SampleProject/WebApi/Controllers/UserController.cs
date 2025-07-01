@@ -3,10 +3,7 @@ using Core.Services.Users;
 using System;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
-using System.Web.Helpers;
 using System.Web.Http;
-using System.Xml.Linq;
 using WebApi.Models.Users;
 
 namespace WebApi.Controllers
