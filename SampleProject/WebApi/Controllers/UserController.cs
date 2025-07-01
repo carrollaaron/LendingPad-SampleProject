@@ -1,9 +1,12 @@
-﻿using System;
+﻿using BusinessEntities;
+using Core.Services.Users;
+using System;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
+using System.Web.Helpers;
 using System.Web.Http;
-using BusinessEntities;
-using Core.Services.Users;
+using System.Xml.Linq;
 using WebApi.Models.Users;
 
 namespace WebApi.Controllers
@@ -89,7 +92,11 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetUsersByTag(string tag)
         {
-            throw new NotImplementedException();
+            var users = _getUserService.GetUsersByTag(tag)
+                                  //.Skip(skip).Take(take)
+                                  //.Select(q => new UserData(q))
+                                  .ToList();
+            return Found(users);
         }
     }
 }

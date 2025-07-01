@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BusinessEntities;
+﻿using BusinessEntities;
 using Common;
 using Data.Indexes;
 using Raven.Client;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace Data.Repositories
 {
@@ -15,6 +16,17 @@ namespace Data.Repositories
         public UserRepository(IDocumentSession documentSession) : base(documentSession)
         {
             _documentSession = documentSession;
+        }
+        public IEnumerable<User> GetByTag(string tag = null)
+        {
+            var query = _documentSession.Advanced.DocumentQuery<User, UsersListIndex>();
+
+            if (tag != null)
+            {
+                query = query.Where($"Tags:{tag}*");
+            }
+
+            return query.ToList();
         }
 
         public IEnumerable<User> Get(UserTypes? userType = null, string name = null, string email = null)
