@@ -86,7 +86,7 @@ namespace BusinessEntities
 
             decimal monthlySalary = annualSalary.Value / 12;
 
-            _monthlySalary = annualSalary;
+            _monthlySalary = monthlySalary;
         }
 
         public void SetTags(IEnumerable<string> tags)
