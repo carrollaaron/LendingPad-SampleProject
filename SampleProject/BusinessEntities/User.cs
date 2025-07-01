@@ -79,7 +79,7 @@ namespace BusinessEntities
 
         public void SetMonthlySalaryFromAnnualSalary(decimal? annualSalary)
         {
-            if (annualSalary == null || annualSalary.Value >= 0)
+            if (annualSalary == null || annualSalary.Value <= 0)
             {
                 throw new ArgumentNullException(nameof(annualSalary) +" was not provided or invalid.");
             }
