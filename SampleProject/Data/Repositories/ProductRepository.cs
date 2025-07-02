@@ -70,9 +70,39 @@ namespace Data.Repositories
             //base.DeleteAll<ProductsListIndex>();
         }
 
-        IEnumerable<Product> IProductRepository.Get(string name, string email)
+        public IEnumerable<Product> GetProductList(string name, decimal cost)
         {
-            throw new System.NotImplementedException();
+            var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
+
+            var hasFirstParameter = false;
+            //if (productType != null)
+            //{
+            //    query = query.WhereEquals("Type", (int)productType);
+            //    hasFirstParameter = true;
+            //}
+
+            if (name != null)
+            {
+                if (hasFirstParameter)
+                {
+                    query = query.AndAlso();
+                }
+                else
+                {
+                    hasFirstParameter = true;
+                }
+                query = query.Where($"Name:*{name}*");
+            }
+
+            if (cost > 0)
+            {
+                if (hasFirstParameter)
+                {
+                    query = query.AndAlso();
+                }
+                query = query.WhereEquals("Cost", cost);
+            }
+            return query.ToList();
         }
     }
 }

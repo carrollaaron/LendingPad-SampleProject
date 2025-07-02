@@ -1,9 +1,11 @@
-﻿using Core.Services.Products;
+﻿using BusinessEntities;
+using Core.Services.Products;
 using System;
 using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models.Products;
+using WebApi.Models.Users;
 
 namespace WebApi.Controllers
 {
@@ -65,6 +67,17 @@ namespace WebApi.Controllers
             return Found(new ProductData(product));
         }
 
+        [Route("list")]
+        [HttpGet]
+        public HttpResponseMessage GetProductList(int skip, int take, [FromBody] ProductModel model)
+        {
+            var users = _getProductService.GetProductList(model.Name, model.Cost)
+                                       .Skip(skip).Take(take)
+                                       .Select(q => new ProductData(q))
+                                       .ToList();
+            return Found(users);
+        }
+
         //[Route("list")]
         //[HttpGet]
         //public HttpResponseMessage GetProducts(int skip, int take, ProductTypes? type = null, string name = null, string email = null)
@@ -84,15 +97,15 @@ namespace WebApi.Controllers
             return Found();
         }
 
-        [Route("list/tag")]
-        [HttpGet]
-        public HttpResponseMessage GetProductsByTag(string tag)
-        {
-            var products = _getProductService.GetProductsByTag(tag)
-                                  //.Skip(skip).Take(take)
-                                  //.Select(q => new ProductData(q))
-                                  .ToList();
-            return Found(products);
-        }
+        //[Route("list/tag")]
+        //[HttpGet]
+        //public HttpResponseMessage GetProductsByTag(string tag)
+        //{
+        //    var products = _getProductService.GetProductsByTag(tag)
+        //                          //.Skip(skip).Take(take)
+        //                          //.Select(q => new ProductData(q))
+        //                          .ToList();
+        //    return Found(products);
+        //}
     }
 }

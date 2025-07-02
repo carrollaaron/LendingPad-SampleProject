@@ -23,14 +23,9 @@ namespace Core.Services.products
             return _productRepository.Get(id);
         }
 
-        public IEnumerable<Product> GetProducts(string name = null, string email = null)
+        public IEnumerable<Product> GetProductList(string name, decimal cost)
         {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Product> GetProductsByTag(string tag)
-        {
-            return null; //todo: _productRepository.GetByTag(tag);
+            return _productRepository.GetProductList(name, cost);
         }
     }
 }
