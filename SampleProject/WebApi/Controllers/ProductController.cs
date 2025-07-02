@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using WebApi.Models.Products;
-using WebApi.Models.Users;
 
 namespace WebApi.Controllers
 {
@@ -64,6 +63,10 @@ namespace WebApi.Controllers
         public HttpResponseMessage GetProduct(Guid productId)
         {
             var product = _getProductService.GetProduct(productId);
+            if (product == null)
+            {
+                return DoesNotExist();
+            }
             return Found(new ProductData(product));
         }
 
@@ -71,23 +74,12 @@ namespace WebApi.Controllers
         [HttpGet]
         public HttpResponseMessage GetProductList(int skip, int take, [FromBody] ProductModel model)
         {
-            var users = _getProductService.GetProductList(model.Name, model.Cost)
+            var users = _getProductService.GetList(model.Name, model.Cost)
                                        .Skip(skip).Take(take)
                                        .Select(q => new ProductData(q))
                                        .ToList();
             return Found(users);
         }
-
-        //[Route("list")]
-        //[HttpGet]
-        //public HttpResponseMessage GetProducts(int skip, int take, ProductTypes? type = null, string name = null, string email = null)
-        //{
-        //    var products = _getProductService.GetProducts(type, name, email)
-        //                               .Skip(skip).Take(take)
-        //                               .Select(q => new ProductData(q))
-        //                               .ToList();
-        //    return Found(products);
-        //}
 
         [Route("clear")]
         [HttpDelete]
@@ -96,16 +88,5 @@ namespace WebApi.Controllers
             _deleteProductService.DeleteAll();
             return Found();
         }
-
-        //[Route("list/tag")]
-        //[HttpGet]
-        //public HttpResponseMessage GetProductsByTag(string tag)
-        //{
-        //    var products = _getProductService.GetProductsByTag(tag)
-        //                          //.Skip(skip).Take(take)
-        //                          //.Select(q => new ProductData(q))
-        //                          .ToList();
-        //    return Found(products);
-        //}
     }
 }

@@ -8,6 +8,6 @@ namespace Core.Services.Products
     {
         Product GetProduct(Guid id);
 
-        IEnumerable<Product> GetProductList(string name, decimal cost);
+        IEnumerable<Product> GetList(string name, decimal cost);
     }
 }

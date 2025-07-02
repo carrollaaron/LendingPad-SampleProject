@@ -70,7 +70,7 @@ namespace Data.Repositories
             //base.DeleteAll<ProductsListIndex>();
         }
 
-        public IEnumerable<Product> GetProductList(string name, decimal cost)
+        public IEnumerable<Product> GetList(string name, decimal cost)
         {
             var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
 

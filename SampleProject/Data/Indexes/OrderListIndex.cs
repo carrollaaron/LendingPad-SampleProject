@@ -12,12 +12,11 @@ namespace Data.Indexes
             Map = orders => from order in orders
                            select new
                                   {
-                                      order.Name,
-                                      order.Email,
-                                      order.Type
+                                      order.Address,
+                                     // order.Products
                                   };
 
-            Index(x => x.Type, FieldIndexing.NotAnalyzed);
+            Index(x => x.Products, FieldIndexing.NotAnalyzed);
         }
     }
 }

@@ -1,97 +1,43 @@
-﻿using System;
+﻿using Common.Extensions;
+using System;
 using System.Collections.Generic;
-using Common.Extensions;
+using System.Net;
 
 namespace BusinessEntities
 {
     public class Order : IdObject
     {
-        private readonly List<string> _tags = new List<string>();
-        private int _age;
-        private string _email;
-        private decimal? _monthlySalary;
-        private string _name;
-        private UserTypes _type = UserTypes.Employee;
+        private readonly List<Guid> _products = new List<Guid>();
+        private string _address;
 
-        public string Email
+        public string Address
         {
-            get => _email;
-            private set => _email = value;
+            get => _address;
+            private set => _address = value;
         }
 
-        public string Name
+        public List<Guid> Products
         {
-            get => _name;
-            private set => _name = value;
+            get => _products;
+            private set => _products.Initialize(value);
         }
 
-        public UserTypes Type
+        public void SetAddress(string address)
         {
-            get => _type;
-            private set => _type = value;
-        }
-
-        public decimal? MonthlySalary
-        {
-            get => _monthlySalary;
-            private set => _monthlySalary = value;
-        }
-
-        public int Age
-        {
-            get => _age;
-            private set => _age = value;
-        }
-
-        public IEnumerable<string> Tags
-        {
-            get => _tags;
-            private set => _tags.Initialize(value);
-        }
-
-        public void SetName(string name)
-        {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(address))
             {
-                throw new ArgumentNullException("Name was not provided.");
+                throw new ArgumentNullException($"{nameof(address)} was not provided.");
             }
-            _name = name;
+            _address = address;
         }
 
-        public void SetEmail(string email)
+        public void SetProducts(List<Guid> products)
         {
-            if (string.IsNullOrEmpty(email))
+            if (products == null || products.Count < 1)
             {
-                throw new ArgumentNullException("Name was not provided.");
+                throw new ArgumentNullException($"{nameof(products)} was not provided.");
             }
-            _email = email;
-        }
-
-        public void SetType(UserTypes type)
-        {
-            _type = type;
-        }
-
-        public void SetAge(int age)
-        {
-            _age = age;
-        }
-
-        public void SetMonthlySalaryFromAnnualSalary(decimal? annualSalary)
-        {
-            if (annualSalary == null || annualSalary.Value <= 0)
-            {
-                throw new ArgumentNullException(nameof(annualSalary) +" was not provided or invalid.");
-            }
-
-            decimal monthlySalary = annualSalary.Value / 12;
-
-            _monthlySalary = monthlySalary;
-        }
-
-        public void SetTags(IEnumerable<string> tags)
-        {
-            _tags.Initialize(tags);
+            _products.Initialize(products);
         }
     }
 }

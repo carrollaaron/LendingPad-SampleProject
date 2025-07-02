@@ -19,10 +19,5 @@ namespace Core.Services.Orders
         {
             _orderRepository.Delete(order);
         }
-
-        public void DeleteAll()
-        {
-            _orderRepository.DeleteAll();
-        }
     }
 }

@@ -7,7 +7,7 @@ namespace Data.Repositories
     {
         IEnumerable<Product> Get(string name = null, string email = null);
         
-        IEnumerable<Product> GetProductList(string name, decimal cost);
+        IEnumerable<Product> GetList(string name, decimal cost);
 
         void DeleteAll();
     }

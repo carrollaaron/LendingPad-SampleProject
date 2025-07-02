@@ -6,6 +6,6 @@ namespace Core.Services.Orders
 {
     public interface ICreateOrderService
     {
-        Order Create(Guid id, string name, string email);
+        Order Create(Guid id, string address, List<Guid> products);
     }
 }

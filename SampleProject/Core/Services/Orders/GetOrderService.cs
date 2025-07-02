@@ -1,34 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using BusinessEntities;
+﻿using BusinessEntities;
 using Common;
 using Data.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Core.Services.Orders
 {
     [AutoRegister]
     public class GetOrderService : IGetOrderService
     {
-        private readonly IOrderRepository _userRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public GetOrderService(IOrderRepository userRepository)
+        public GetOrderService(IOrderRepository orderRepository)
         {
-            _userRepository = userRepository;
+            _orderRepository = orderRepository;
         }
 
         public Order GetOrder(Guid id)
         {
-            return null; //todo: _userRepository.Get(id);
+            return _orderRepository.Get(id);
         }
 
-        public IEnumerable<Order> GetOrders(string name = null, string email = null)
+        public IEnumerable<Order> GetList(string address, List<Guid> products)
         {
-            return null; //todo: _userRepository.Get(userType, name, email);
-        }
-
-        public IEnumerable<Order> GetOrdersByTag(string tag)
-        {
-            return null; //todo: _userRepository.GetByTag(tag);
+            return _orderRepository.GetList(address);
         }
     }
 }

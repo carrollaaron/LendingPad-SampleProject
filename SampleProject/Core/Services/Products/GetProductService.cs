@@ -1,6 +1,5 @@
 ﻿using BusinessEntities;
 using Common;
-using Core.Services.products;
 using Core.Services.Products;
 using Data.Repositories;
 using System;
@@ -23,9 +22,9 @@ namespace Core.Services.products
             return _productRepository.Get(id);
         }
 
-        public IEnumerable<Product> GetProductList(string name, decimal cost)
+        public IEnumerable<Product> GetList(string name, decimal cost)
         {
-            return _productRepository.GetProductList(name, cost);
+            return _productRepository.GetList(name, cost);
         }
     }
 }

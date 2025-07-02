@@ -1,16 +1,38 @@
 ﻿using BusinessEntities;
 using Common;
-using Core.Services.Orders;
+using Core.Factories;
+using Core.Services.Products;
+using Data.Repositories;
+using System;
+using System.Collections.Generic;
 
 namespace Core.Services.Orders
 {
-    [AutoRegister(AutoRegisterTypes.Singleton)]
+    [AutoRegister]
     public class UpdateOrderService : IUpdateOrderService
     {
-        public void Update(Order order, string name, string email)
+        private readonly IGetProductService _getProductService;
+
+        public UpdateOrderService(IGetProductService getProductService)
         {
-            order.SetEmail(email);
-            order.SetName(name);
+            _getProductService = getProductService;
+        }
+        public void Update(Order order, string address, List<Guid> products)
+        {
+            for (int i = products.Count - 1; i >= 0; i--)
+            {
+                var record = _getProductService.GetProduct(products[i]);
+
+                if (record == null)
+                {
+                    products.RemoveAt(i);
+                }
+            }
+            bool recordFound = products.Count > 0;
+            
+            
+            order.SetProducts(products);
+            order.SetAddress(address);
         }
     }
 }

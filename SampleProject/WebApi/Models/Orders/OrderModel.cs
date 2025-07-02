@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using BusinessEntities;
+﻿using System;
+using System.Collections.Generic;
 
 namespace WebApi.Models.Orders
 {
     public class OrderModel
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public UserTypes Type { get; set; }
-        public int Age { get; set; }
-        public decimal? AnnualSalary { get; set; }
-        public IEnumerable<string> Tags { get; set; }
+        public string Address { get; set; }
+
+        public List<Guid> Products { get; set; }
     }
 }
