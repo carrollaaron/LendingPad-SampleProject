@@ -42,7 +42,7 @@ namespace WebApi.Controllers
                 return DoesNotExist();
             }
             _updateUserService.Update(user, model.Name, model.Email, model.Type, model.Age, model.AnnualSalary, model.Tags);
-            return Found(new UserData(user));
+            return Found(new UserData(user)); 
         }
 
         [Route("{userId:guid}/delete")]
