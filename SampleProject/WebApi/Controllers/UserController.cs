@@ -90,8 +90,6 @@ namespace WebApi.Controllers
         public HttpResponseMessage GetUsersByTag(string tag)
         {
             var users = _getUserService.GetUsersByTag(tag)
-                                  //.Skip(skip).Take(take)
-                                  //.Select(q => new UserData(q))
                                   .ToList();
             return Found(users);
         }

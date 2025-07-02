@@ -80,13 +80,5 @@ namespace WebApi.Controllers
                                        .ToList();
             return Found(users);
         }
-
-        [Route("clear")]
-        [HttpDelete]
-        public HttpResponseMessage DeleteAllProducts()
-        {
-            _deleteProductService.DeleteAll();
-            return Found();
-        }
     }
 }

@@ -1,8 +1,6 @@
 ﻿using BusinessEntities;
 using Common;
-using Core.Factories;
 using Core.Services.Products;
-using Data.Repositories;
 using System;
 using System.Collections.Generic;
 

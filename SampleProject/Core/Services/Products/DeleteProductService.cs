@@ -19,10 +19,5 @@ namespace Core.Services.Products
         {
             _productRepository.Delete(product);
         }
-
-        public void DeleteAll()
-        {
-            _productRepository.DeleteAll();
-        }
     }
 }

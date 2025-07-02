@@ -16,30 +16,12 @@ namespace Data.Repositories
         {
             _documentSession = documentSession;
         }
-        public IEnumerable<Product> GetByTag(string tag = null)
-        {
-            //var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
-
-            if (tag != null)
-            {
-                //query = query.Where($"tags:*{tag}*");               //Note: Works only from Web UI
-                //query = query.Where($"Name:*Andy*");              //Note: Works
-                //query = query.WhereIn("Tags", new[] { $"tag" });  //Note: Alternate form
-            }
-
-            return null;// query.ToList();
-        }
 
         public IEnumerable<Product> Get(string name = null, string email = null)
         {
             var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
 
             var hasFirstParameter = false;
-            //if (productType != null)
-            //{
-            //    query = query.WhereEquals("Type", (int)productType);
-            //    hasFirstParameter = true;
-            //}
 
             if (name != null)
             {
@@ -65,21 +47,11 @@ namespace Data.Repositories
             return query.ToList();
         }
 
-        public void DeleteAll()
-        {
-            //base.DeleteAll<ProductsListIndex>();
-        }
-
         public IEnumerable<Product> GetList(string name, decimal cost)
         {
             var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
 
             var hasFirstParameter = false;
-            //if (productType != null)
-            //{
-            //    query = query.WhereEquals("Type", (int)productType);
-            //    hasFirstParameter = true;
-            //}
 
             if (name != null)
             {

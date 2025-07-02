@@ -8,7 +8,5 @@ namespace Data.Repositories
         IEnumerable<Product> Get(string name = null, string email = null);
         
         IEnumerable<Product> GetList(string name, decimal cost);
-
-        void DeleteAll();
     }
 }
