@@ -1,99 +1,98 @@
-﻿//using BusinessEntities;
-//using Core.Services.Users;
-//using System;
-//using System.Linq;
-//using System.Net.Http;
-//using System.Web.Http;
-//using WebApi.Models.Users;
+﻿using Core.Services.Products;
+using System;
+using System.Linq;
+using System.Net.Http;
+using System.Web.Http;
+using WebApi.Models.Products;
 
-//namespace WebApi.Controllers
-//{
-//    [RoutePrefix("products")]
-//    public class ProductController : BaseApiController
-//    {
-//        private readonly ICreateUserService _createUserService;
-//        private readonly IDeleteUserService _deleteUserService;
-//        private readonly IGetUserService _getUserService;
-//        private readonly IUpdateUserService _updateUserService;
+namespace WebApi.Controllers
+{
+    [RoutePrefix("products")]
+    public class ProductController : BaseApiController
+    {
+        private readonly ICreateProductService _createProductService;
+        private readonly IDeleteProductService _deleteProductService;
+        private readonly IGetProductService _getProductService;
+        private readonly IUpdateProductService _updateProductService;
 
-//        public ProductController(ICreateUserService createUserService, IDeleteUserService deleteUserService, IGetUserService getUserService, IUpdateUserService updateUserService)
-//        {
-//            _createUserService = createUserService;
-//            _deleteUserService = deleteUserService;
-//            _getUserService = getUserService;
-//            _updateUserService = updateUserService;
-//        }
+        public ProductController(ICreateProductService createProductService, IDeleteProductService deleteProductService, IGetProductService getProductService, IUpdateProductService updateProductService)
+        {
+            _createProductService = createProductService;
+            _deleteProductService = deleteProductService;
+            _getProductService = getProductService;
+            _updateProductService = updateProductService;
+        }
 
-//        [Route("{userId:guid}/create")]
-//        [HttpPost]
-//        public HttpResponseMessage CreateUser(Guid userId, [FromBody] UserModel model)
-//        {
-//            var user = _createUserService.Create(userId, model.Name, model.Email, model.Type, model.Age, model.AnnualSalary, model.Tags);
-//            return Found(new UserData(user));
-//        }
+        [Route("{productId:guid}/create")]
+        [HttpPost]
+        public HttpResponseMessage CreateProduct(Guid productId, [FromBody] ProductModel model)
+        {
+            var product = _createProductService.Create(productId, model.Name, model.Cost);
+            return Found(new ProductData(product));
+        }
 
-//        [Route("{userId:guid}/update")]
-//        [HttpPost]
-//        public HttpResponseMessage UpdateUser(Guid userId, [FromBody] UserModel model)
-//        {
-//            var user = _getUserService.GetUser(userId);
-//            if (user == null)
-//            {
-//                return DoesNotExist();
-//            }
-//            _updateUserService.Update(user, model.Name, model.Email, model.Type, model.Age, model.AnnualSalary, model.Tags);
-//            return Found(new UserData(user));
-//        }
+        [Route("{productId:guid}/update")]
+        [HttpPost]
+        public HttpResponseMessage UpdateProduct(Guid productId, [FromBody] ProductModel model)
+        {
+            var product = _getProductService.GetProduct(productId);
+            if (product == null)
+            {
+                return DoesNotExist();
+            }
+            _updateProductService.Update(product, model.Name, model.Cost);
+            return Found(new ProductData(product));
+        }
 
-//        [Route("{userId:guid}/delete")]
-//        [HttpDelete]
-//        public HttpResponseMessage DeleteUser(Guid userId)
-//        {
-//            var user = _getUserService.GetUser(userId);
-//            if (user == null)
-//            {
-//                return DoesNotExist();
-//            }
-//            _deleteUserService.Delete(user);
-//            return Found();
-//        }
+        [Route("{productId:guid}/delete")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteProduct(Guid productId)
+        {
+            var product = _getProductService.GetProduct(productId);
+            if (product == null)
+            {
+                return DoesNotExist();
+            }
+            _deleteProductService.Delete(product);
+            return Found();
+        }
 
-//        [Route("{userId:guid}")]
-//        [HttpGet]
-//        public HttpResponseMessage GetUser(Guid userId)
-//        {
-//            var user = _getUserService.GetUser(userId);
-//            return Found(new UserData(user));
-//        }
+        [Route("{productId:guid}")]
+        [HttpGet]
+        public HttpResponseMessage GetProduct(Guid productId)
+        {
+            var product = _getProductService.GetProduct(productId);
+            return Found(new ProductData(product));
+        }
 
-//        [Route("list")]
-//        [HttpGet]
-//        public HttpResponseMessage GetUsers(int skip, int take, UserTypes? type = null, string name = null, string email = null)
-//        {
-//            var users = _getUserService.GetUsers(type, name, email)
-//                                       .Skip(skip).Take(take)
-//                                       .Select(q => new UserData(q))
-//                                       .ToList();
-//            return Found(users);
-//        }
+        //[Route("list")]
+        //[HttpGet]
+        //public HttpResponseMessage GetProducts(int skip, int take, ProductTypes? type = null, string name = null, string email = null)
+        //{
+        //    var products = _getProductService.GetProducts(type, name, email)
+        //                               .Skip(skip).Take(take)
+        //                               .Select(q => new ProductData(q))
+        //                               .ToList();
+        //    return Found(products);
+        //}
 
-//        [Route("clear")]
-//        [HttpDelete]
-//        public HttpResponseMessage DeleteAllUsers()
-//        {
-//            _deleteUserService.DeleteAll();
-//            return Found();
-//        }
+        [Route("clear")]
+        [HttpDelete]
+        public HttpResponseMessage DeleteAllProducts()
+        {
+            _deleteProductService.DeleteAll();
+            return Found();
+        }
 
-//        [Route("list/tag")]
-//        [HttpGet]
-//        public HttpResponseMessage GetUsersByTag(string tag)
-//        {
-//            var users = _getUserService.GetUsersByTag(tag)
-//                                  //.Skip(skip).Take(take)
-//                                  //.Select(q => new UserData(q))
-//                                  .ToList();
-//            return Found(users);
-//        }
-//    }
-//}
+        [Route("list/tag")]
+        [HttpGet]
+        public HttpResponseMessage GetProductsByTag(string tag)
+        {
+            var products = _getProductService.GetProductsByTag(tag)
+                                  //.Skip(skip).Take(take)
+                                  //.Select(q => new ProductData(q))
+                                  .ToList();
+            return Found(products);
+        }
+    }
+}

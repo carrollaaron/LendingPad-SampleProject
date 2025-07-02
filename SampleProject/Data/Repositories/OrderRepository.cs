@@ -75,7 +75,7 @@ namespace Data.Repositories
             throw new System.NotImplementedException();
         }
 
-        IEnumerable<User> IOrderRepository.GetByTag(string tag)
+        public IEnumerable<Order> Get(string name = null, string email = null)
         {
             throw new System.NotImplementedException();
         }

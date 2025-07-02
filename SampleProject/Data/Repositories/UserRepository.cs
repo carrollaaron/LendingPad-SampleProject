@@ -1,18 +1,18 @@
 ﻿using BusinessEntities;
+using Common;
 using Data.Indexes;
 using Raven.Client;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 
 namespace Data.Repositories
 {
-    //[AutoRegister]
-    public class RavenUserRepository : Repository<User>, IUserRepository
+    [AutoRegister]
+    public class UserRepository : Repository<User>, IUserRepository
     {
         private readonly IDocumentSession _documentSession;
 
-        public RavenUserRepository(IDocumentSession documentSession) : base(documentSession)
+        public UserRepository(IDocumentSession documentSession) : base(documentSession)
         {
             _documentSession = documentSession;
         }

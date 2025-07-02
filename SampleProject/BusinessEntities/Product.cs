@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using Common.Extensions;
 
 namespace BusinessEntities
 {
     public class Product : IdObject
     {
-        private readonly List<string> _tags = new List<string>();
-        private int _age;
-        private string _email;
-        private decimal? _monthlySalary;
-        private string _name;
-        private UserTypes _type = UserTypes.Employee;
+        private Guid _id;
+        private string _name;        
+        private decimal _cost;
 
-        public string Email
+        public Guid Id
         {
-            get => _email;
-            private set => _email = value;
+            get => _id;
+            private set => _id = value;
         }
 
         public string Name
@@ -25,73 +20,38 @@ namespace BusinessEntities
             private set => _name = value;
         }
 
-        public UserTypes Type
+        public decimal Cost        
         {
-            get => _type;
-            private set => _type = value;
+            get => _cost;
+            private set => _cost = value;
         }
 
-        public decimal? MonthlySalary
+        public void SetId(Guid id)
         {
-            get => _monthlySalary;
-            private set => _monthlySalary = value;
-        }
-
-        public int Age
-        {
-            get => _age;
-            private set => _age = value;
-        }
-
-        public IEnumerable<string> Tags
-        {
-            get => _tags;
-            private set => _tags.Initialize(value);
+            if (id == Guid.Empty)
+            {
+                throw new ArgumentNullException($"{nameof(id)} was not provided.");
+            }
+            _id = id;
         }
 
         public void SetName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("Name was not provided.");
+                throw new ArgumentNullException($"{nameof(name)} was not provided.");
             }
             _name = name;
         }
 
-        public void SetEmail(string email)
+        public void SetCost(decimal cost)
         {
-            if (string.IsNullOrEmpty(email))
+            if (cost == null || cost <= 0)
             {
-                throw new ArgumentNullException("Name was not provided.");
-            }
-            _email = email;
-        }
-
-        public void SetType(UserTypes type)
-        {
-            _type = type;
-        }
-
-        public void SetAge(int age)
-        {
-            _age = age;
-        }
-
-        public void SetMonthlySalaryFromAnnualSalary(decimal? annualSalary)
-        {
-            if (annualSalary == null || annualSalary.Value <= 0)
-            {
-                throw new ArgumentNullException(nameof(annualSalary) +" was not provided or invalid.");
+                throw new ArgumentNullException( $"{nameof(cost)} was not provided or invalid.");
             }
 
-            decimal monthlySalary = annualSalary.Value / 12;
-
-            _monthlySalary = monthlySalary;
-        }
-
-        public void SetTags(IEnumerable<string> tags)
-        {
-            _tags.Initialize(tags);
+            _cost = cost;
         }
     }
 }

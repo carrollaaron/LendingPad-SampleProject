@@ -30,10 +30,6 @@ namespace Data
                                    return session;
                                }, lifestyle);
 
-
-            builder.Services.AddDbContext<BookContext>(options =>
-                    options.UseInMemoryDatabase("BookDatabase"));
-
         }
 
         private static IDocumentStore InitializeDocumentStore(Assembly assembly, bool createIndexes)

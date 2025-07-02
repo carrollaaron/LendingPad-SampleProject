@@ -8,38 +8,38 @@ using System.Linq;
 namespace Data.Repositories
 {
     [AutoRegister]
-    public class InMemoryUserRepository : Repository<User>, IUserRepository
+    public class ProductRepository : Repository<Product>, IProductRepository
     {
         private readonly IDocumentSession _documentSession;
 
-        public InMemoryUserRepository(IDocumentSession documentSession) : base(documentSession)
+        public ProductRepository(IDocumentSession documentSession) : base(documentSession)
         {
             _documentSession = documentSession;
         }
-        public IEnumerable<User> GetByTag(string tag = null)
+        public IEnumerable<Product> GetByTag(string tag = null)
         {
-            var query = _documentSession.Advanced.DocumentQuery<User, UsersListIndex>();
+            //var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
 
             if (tag != null)
             {
-                query = query.Where($"tags:*{tag}*");               //Note: Works only from Web UI
+                //query = query.Where($"tags:*{tag}*");               //Note: Works only from Web UI
                 //query = query.Where($"Name:*Andy*");              //Note: Works
                 //query = query.WhereIn("Tags", new[] { $"tag" });  //Note: Alternate form
             }
 
-            return query.ToList();
+            return null;// query.ToList();
         }
 
-        public IEnumerable<User> Get(UserTypes? userType = null, string name = null, string email = null)
+        public IEnumerable<Product> Get(string name = null, string email = null)
         {
-            var query = _documentSession.Advanced.DocumentQuery<User, UsersListIndex>();
+            var query = _documentSession.Advanced.DocumentQuery<Product, ProductsListIndex>();
 
             var hasFirstParameter = false;
-            if (userType != null)
-            {
-                query = query.WhereEquals("Type", (int)userType);
-                hasFirstParameter = true;
-            }
+            //if (productType != null)
+            //{
+            //    query = query.WhereEquals("Type", (int)productType);
+            //    hasFirstParameter = true;
+            //}
 
             if (name != null)
             {
@@ -67,7 +67,12 @@ namespace Data.Repositories
 
         public void DeleteAll()
         {
-            base.DeleteAll<UsersListIndex>();
+            //base.DeleteAll<ProductsListIndex>();
+        }
+
+        IEnumerable<Product> IProductRepository.Get(string name, string email)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

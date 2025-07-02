@@ -8,13 +8,13 @@ using Data.Repositories;
 namespace Core.Services.Users
 {
     [AutoRegister]
-    public class CreateOrderService : ICreateUserService
+    public class CreateUserService : ICreateUserService
     {
         private readonly IUpdateUserService _updateUserService;
         private readonly IIdObjectFactory<User> _userFactory;
         private readonly IUserRepository _userRepository;
 
-        public CreateOrderService(IIdObjectFactory<User> userFactory, IUserRepository userRepository, IUpdateUserService updateUserService)
+        public CreateUserService(IIdObjectFactory<User> userFactory, IUserRepository userRepository, IUpdateUserService updateUserService)
         {
             _userFactory = userFactory;
             _userRepository = userRepository;
